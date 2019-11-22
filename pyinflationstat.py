@@ -2,6 +2,8 @@ from selenium import webdriver
 import traceback
 import sys
 import time
+import requests
+import json
 import csv
 
 # Open a Specific @url with Selenium @driver
@@ -32,7 +34,7 @@ def print_help():
     print('Flags:\n')
     print('\t--help : Print Usage\n')
 
-# Checking the formart of the product ID
+# Checking the formart of the @productID
 def check_productID(productID):
     try:
         if (len(productID) != 13):
@@ -42,7 +44,7 @@ def check_productID(productID):
     except:
         sys.exit(1)
 
-# Checking the format of the years
+# Checking the format of the @starting_year and the @ending_year
 def check_years(starting_year, ending_year):
 
     try:
@@ -74,12 +76,35 @@ def check_arguments():
             arguments.append(argument)
     arguments.pop(0)
     return arguments
-    
+
+# Parsing the @data receive from the GET request according to the @dictionary
+def parse_data(data, dictionary):
+    print("parse_data")
+
+# Fetching the data on the website with a GET request according to @dictionary  
+def fetch_data(dictionary):
+    try:
+        url = 'https://api.bls.gov/publicAPI/v2/timeseries/data/' + dictionary.get('product') + '.json'
+        request = requests.get(url)
+        data = request.json()
+        results = data['Results']['series'][0]['data']
+        print(data['status'])
+        return(results)
+
+    except:
+        print("Error while requesting API")
 
 def main():
     arguments = check_arguments()
 
     check_productID(arguments[0])
     check_years(arguments[1], arguments[2])
+    dictionary = {
+        'product' : arguments[0],
+        'start_year' : arguments[1],
+        'end_year' : arguments[2]
+    }
+    data = fetch_data(dictionary)
+    parse_data(data, dictionary)
     #request_data_api(argument)
 main()
