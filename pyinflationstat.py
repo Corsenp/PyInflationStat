@@ -1,7 +1,6 @@
 import sys
 import requests
 import matplotlib.pyplot as plt
-from selenium import webdriver
 
 def create_graph(data, dictionary):
     '''
@@ -23,28 +22,6 @@ def create_graph(data, dictionary):
         plt.show()
     except:
         print("ERROR : error while creating the graph")
-        sys.exit(1)
-
-def open_url(driver, url):
-    '''
-    Open a Specific @url with Selenium @driver
-    '''
-    try:
-        driver.get(url)
-    except:
-        driver.quit()
-    finally:
-        driver.quit()
-
-def init_driver():
-    '''
-    Initiate the Selenium Web Driver
-    '''
-    try:
-        driver = webdriver.Chrome(executable_path=".//chromedriver")
-        return driver
-    except:
-        print("chromedriver not found, please place it on the root of the project's folder")
         sys.exit(1)
 
 def print_help():
