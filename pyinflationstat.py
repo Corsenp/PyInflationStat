@@ -79,8 +79,24 @@ def check_arguments():
 
 # Parsing the @data receive from the GET request according to the @dictionary
 def parse_data(data, dictionary):
-    print("parse_data")
-
+    values = []
+    print("PARSE")
+    try:
+        for result in data:
+            if int(result.get('year')) >= dictionary.get('start_year') and int(result.get('year')) <= dictionary.get('end_year'):
+                result.pop('footnotes')
+                result.pop('periodName')
+                result['period'] = result['period'] + '/' + result['year']
+                result.pop('year')
+                values.append(result)
+        
+        print(values)
+        return values
+    
+    except:
+        print('ERROR : error while parsing data')
+        sys.exit(1)
+    
 # Fetching the data on the website with a GET request according to @dictionary  
 def fetch_data(dictionary):
     try:
@@ -101,10 +117,9 @@ def main():
     check_years(arguments[1], arguments[2])
     dictionary = {
         'product' : arguments[0],
-        'start_year' : arguments[1],
-        'end_year' : arguments[2]
+        'start_year' : int(arguments[1]),
+        'end_year' : int(arguments[2])
     }
     data = fetch_data(dictionary)
     parse_data(data, dictionary)
-    #request_data_api(argument)
 main()
