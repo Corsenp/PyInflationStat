@@ -38,6 +38,7 @@ Example:
 pipenv run python3.6 pyinflationstat.py APU0000701111 2016 2019
 ```
 
+### Pipenv Shell
 
 If you want to run the script with the pipenv shell, just use :
 
