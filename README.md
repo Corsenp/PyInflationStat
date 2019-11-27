@@ -5,7 +5,7 @@ and creating a graph to display this data.
 
 ## Installation
 
-Python 3 is required in order to run this program
+Python 3 is required in order to run this program  
 Pipenv is required in order to run this program
 
 ### OSX
