@@ -39,6 +39,11 @@ pipenv run python3.6 pyinflationstat.py APU0000701111 2016 2019
 ```
 
 
+If you want to run the script with the pipenv shell, just use :
+
+```bash
+pipenv shell
+```
 
 If you have any trouble with pipenv use the help flag:
 
